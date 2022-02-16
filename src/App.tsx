@@ -1,46 +1,31 @@
-import "./App.scss";
+import React, { useEffect } from 'react'
+import './App.scss'
 
-import { ThemeProvider } from "./theme";
-import Container from "@material-ui/core/Container";
+import { Route, HashRouter as Router, Routes } from 'react-router-dom'
+import pkg from '../package.json'
+import { AppTheme } from './theme'
 
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Rc from "./pages/Rc";
-import { useEffect } from "react";
+import Home from './pages/Home'
+import Rc from './pages/Rc'
 
-import pkg from "../package.json";
 
-/**
 
- */
-function consoleInfo(
-  name: string,
-  link: string,
-  color = "#0078E7",
-  emoji = "☁️"
-) {}
 
-function App() {
-  useEffect(() => {
-    consoleInfo(pkg.name, pkg.repository.url);
-    consoleInfo("@" + pkg.author.name, pkg.author.url);
-  }, []);
+const App: React.FC = () => {
   return (
-    <ThemeProvider>
-      <Container maxWidth="sm">
-        <Router>
-          <Switch>
-            <Route path="/rc">
-              <Rc />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </Router>
-      </Container>
-    </ThemeProvider>
-  );
+    <AppTheme>
+      <main className="text-gray-700 dark:text-gray-200 p-2">
+        <div className="max-w-600px m-auto">
+          <Router>
+            <Routes>
+              <Route path="/rc" element={<Rc />}></Route>
+              <Route path="/" element={<Home />}></Route>
+            </Routes>
+          </Router>
+        </div>
+      </main>
+    </AppTheme>
+  )
 }
 
-export default App;
+export default App

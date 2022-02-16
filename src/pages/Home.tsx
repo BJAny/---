@@ -1,80 +1,68 @@
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import React from 'react'
+import { Button } from '@mui/material'
 
-import ProTip from "../components/ProTip";
-import RemoteControl from "../components/RemoteControl";
+import { ProTip } from '~/components/ProTip'
+import { RemoteControl } from '~/components/RemoteControl'
 
-import AirConditioner from "../features/ac/AirConditioner";
-import Toast from "../features/toast/Toast";
+import { AirConditioner } from '~/features/ac/AirConditioner'
+import { Toast } from '~/features/toast/Toast'
 
-import { ThemeProvider } from "../theme";
-
-import { useAppSelector } from "../app/hooks";
-import { RootState } from "../app/store";
-import Copyright from "../layouts/Copyright";
-import { useDetectStorage } from "../features/ac";
+import { useAppSelector } from '~/app/hooks'
+import type { RootState } from '~/app/store'
+import { Copyright } from '~/layouts/Copyright'
+import { useDetectStorage } from '~/features/ac'
 
 /**
  * 主页
  * @returns
  */
-function Home() {
-  const ac = useAppSelector((state: RootState) => state.ac);
+const Home: React.FC = () => {
+  const ac = useAppSelector((state: RootState) => state.ac)
 
-  useDetectStorage();
+  useDetectStorage()
 
   /**
    * 根据模式返回对应的色温
    * @returns
    */
   function getClassByMode() {
-    if (ac.status) {
-      return ac.mode === "hot" ? "hot-color" : "cold-color";
-    } else {
-      return "";
-    }
+    if (ac.status)
+      return ac.mode === 'hot' ? 'hot-color' : 'cold-color'
+    else
+      return ''
   }
 
   return (
-    <ThemeProvider>
-      <Container maxWidth="sm" className={getClassByMode()}>
-        <Box sx={{ pt: 4 }} bgcolor="transparent">
-          <Typography
-            color="textPrimary"
-            align="center"
-            variant="h4"
-            component="h1"
-            gutterBottom
-          >
-            便携小空调
-          </Typography>
-          <ProTip />
-          <AirConditioner
-            status={ac.status}
-            temperature={ac.temperature}
-            mode={ac.mode}
-          />
-          <div className="text-center">
-            <Box sx={{ mt: 2 }}>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  window.open("/#/rc", "_blank", "width=300, height=400");
-                }}
-              >
-                独立遥控器
-              </Button>
-            </Box>
+    <div className={`max-w-600px m-auto ${getClassByMode()}`}>
+      <div className="pt-6">
+        <h1 className="text-center text-3xl">
+          便携小空调
+        </h1>
+        <ProTip />
+        <AirConditioner
+          status={ac.status}
+          temperature={ac.temperature}
+          mode={ac.mode}
+        />
+        <div className="text-center">
+          <div className="mt-2">
+            <Button
+              variant="outlined"
+              onClick={() => {
+                window.open('/#/rc', '_blank', 'width=300, height=400')
+              }}
+            >
+              独立遥控器
+            </Button>
           </div>
-          <RemoteControl />
-          <Copyright />
-        </Box>
-        <Toast />
-      </Container>
-    </ThemeProvider>
-  );
+        </div>
+        <RemoteControl />
+        <Copyright />
+      </div>
+
+      <Toast />
+    </div>
+  )
 }
 
-export default Home;
+export default Home

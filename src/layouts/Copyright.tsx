@@ -1,34 +1,14 @@
-import Box from "@material-ui/core/Box";
-import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
-import * as pkg from "../../package.json";
-import {makeStyles} from "@material-ui/styles";
+import React from 'react'
+import pkg from '~/../package.json'
 
-const style = makeStyles({
-    footer: {
-        "&:hover": {
-            textDecoration: "none"
-        }
-    }
-})
-
-function Copyright() {
-    const useStyle = style()
+export const Copyright: React.FC = () => {
   return (
     <div>
-      <Box>
-        <Typography variant="body2" color="textSecondary" align="center">
-            Copyright © 2021 QuantumzzZ All Rights Reserved
-        </Typography>
-        <Typography variant="body2" color="textSecondary" align="center">
-            <Link color="inherit" href={pkg.repository.url} target="_blank" className={useStyle.footer}>
-                quantumzzz@foxmail.com
-            </Link>
-
-        </Typography>
-      </Box>
+      <div className="text-center text-xs">
+        <p>Copyright &copy; {new Date().getFullYear()} {pkg.author.name} All Rights Reserved.</p>
+      </div>
     </div>
-  );
+  )
 }
 
-export default Copyright;
+export default Copyright
